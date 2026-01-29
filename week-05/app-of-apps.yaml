@@ -10,7 +10,7 @@ spec:
 
   source:
     # Change this to your repository URL
-    repoURL: https://github.com/your-username/k3s-lab.git
+    repoURL: https://github.com/ian-b-stewart/k3s-lab.git
     targetRevision: HEAD
     path: week-05/apps
 

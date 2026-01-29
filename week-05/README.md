@@ -117,7 +117,7 @@ First, push the example-app to your GitHub:
 
 # Create ArgoCD application pointing to your repo
 argocd app create my-app \
-  --repo https://github.com/<your-username>/k3s-lab.git \
+  --repo https://github.com/ian-b-stewart/k3s-lab.git \
   --path week-05/example-app \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace default

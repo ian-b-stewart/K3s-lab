@@ -17,7 +17,7 @@ homelab environments.
 
 ```bash
 # Clone this repository
-git clone https://github.com/<your-username>/k3s-lab.git /opt/k3s-lab
+git clone https://github.com/ian-b-stewart/k3s-lab.git /opt/k3s-lab
 cd /opt/k3s-lab
 
 # Prepare Debian 13 VM
