@@ -1,0 +1,54 @@
+# Deployment with rolling update strategy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: webapp
+
+  # Rolling update configuration
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # Max pods above desired during update
+      maxUnavailable: 1  # Max pods below desired during update
+
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp
+          image: nginx:1.24
+          ports:
+            - containerPort: 80
+
+          # Readiness probe - when is pod ready for traffic?
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          # Liveness probe - when should pod be restarted?
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

@@ -1,0 +1,16 @@
+# This pod exceeds LimitRange maximums and will be rejected
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oversized-pod
+spec:
+  containers:
+    - name: app
+      image: nginx:1.25
+      resources:
+        requests:
+          memory: "1Gi"   # Exceeds max of 512Mi
+          cpu: "1"        # Exceeds max of 500m
+        limits:
+          memory: "2Gi"
+          cpu: "2"

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdb-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: pdb-app
+  template:
+    metadata:
+      labels:
+        app: pdb-app
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

@@ -1,0 +1,61 @@
+# StatefulSet for applications requiring stable identities
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  # Headless service for stable DNS
+  serviceName: web
+
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: data
+              mountPath: /usr/share/nginx/html
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+
+  # Each pod gets its own PVC
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 1Gi
+---
+# Headless service for StatefulSet
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      name: web
+  # Headless service (no ClusterIP)
+  clusterIP: None

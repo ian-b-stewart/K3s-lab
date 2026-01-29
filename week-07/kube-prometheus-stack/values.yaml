@@ -1,0 +1,77 @@
+# Custom values for kube-prometheus-stack
+# Sized for K3s homelab
+
+# Prometheus configuration
+prometheus:
+  prometheusSpec:
+    # Data retention
+    retention: 7d
+
+    # Storage
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          resources:
+            requests:
+              storage: 5Gi
+
+    # Resources
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: 500m
+      requests:
+        memory: 512Mi
+        cpu: 100m
+
+# Grafana configuration
+grafana:
+  adminPassword: "prom-operator"
+
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClassName: local-path
+
+  resources:
+    limits:
+      memory: 256Mi
+      cpu: 200m
+    requests:
+      memory: 128Mi
+      cpu: 50m
+
+# Alertmanager configuration
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          resources:
+            requests:
+              storage: 1Gi
+
+    resources:
+      limits:
+        memory: 128Mi
+        cpu: 100m
+      requests:
+        memory: 64Mi
+        cpu: 50m
+
+# Node exporter for host metrics
+nodeExporter:
+  enabled: true
+
+# kube-state-metrics for K8s object metrics
+kubeStateMetrics:
+  enabled: true
+
+# Disable components not needed for learning
+kubeProxy:
+  enabled: false
+
+kubeEtcd:
+  enabled: false

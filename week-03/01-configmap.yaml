@@ -1,0 +1,39 @@
+# ConfigMaps store non-sensitive configuration data
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  # Simple key-value pairs (become environment variables)
+  APP_ENV: "development"
+  APP_DEBUG: "true"
+  LOG_LEVEL: "info"
+  MAX_CONNECTIONS: "100"
+
+  # Multi-line values (mounted as files)
+  settings.json: |
+    {
+      "database": {
+        "host": "postgres",
+        "port": 5432,
+        "name": "myapp"
+      },
+      "cache": {
+        "enabled": true,
+        "ttl": 3600
+      },
+      "features": {
+        "dark_mode": true,
+        "beta_features": false
+      }
+    }
+
+  nginx.conf: |
+    server {
+        listen 80;
+        server_name localhost;
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+    }

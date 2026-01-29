@@ -1,0 +1,22 @@
+# ResourceQuota limits total resources in a namespace
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: namespace-quota
+spec:
+  hard:
+    # Compute limits
+    requests.cpu: "2"
+    requests.memory: "2Gi"
+    limits.cpu: "4"
+    limits.memory: "4Gi"
+
+    # Object count limits
+    pods: "10"
+    services: "5"
+    secrets: "10"
+    configmaps: "10"
+    persistentvolumeclaims: "5"
+
+    # Storage limits
+    requests.storage: "10Gi"

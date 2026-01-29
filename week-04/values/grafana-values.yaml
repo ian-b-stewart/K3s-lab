@@ -1,0 +1,53 @@
+# Custom values for Grafana
+# Sized for K3s homelab
+
+# Persistence
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClassName: local-path
+
+# Admin credentials (change in production!)
+adminUser: admin
+adminPassword: changeme
+
+# Resources
+resources:
+  limits:
+    memory: 256Mi
+    cpu: 200m
+  requests:
+    memory: 128Mi
+    cpu: 50m
+
+# Datasources (auto-configure Prometheus)
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-server.helm-demo.svc.cluster.local
+        access: proxy
+        isDefault: true
+
+# Pre-install dashboards
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: default
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    kubernetes-cluster:
+      gnetId: 6417
+      revision: 1
+      datasource: Prometheus

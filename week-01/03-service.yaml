@@ -1,0 +1,22 @@
+# A Service provides stable networking for a set of Pods
+# Pods are selected using labels
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+spec:
+  # Select pods with this label
+  selector:
+    app: whoami
+
+  # Port mapping
+  ports:
+    - port: 80        # Service port (what clients connect to)
+      targetPort: 80  # Container port (where traffic goes)
+      protocol: TCP
+      name: http
+
+  # ClusterIP = internal only (default)
+  # NodePort = expose on each node's IP
+  # LoadBalancer = cloud load balancer
+  type: ClusterIP

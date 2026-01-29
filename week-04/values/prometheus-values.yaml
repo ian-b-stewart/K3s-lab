@@ -1,0 +1,38 @@
+# Custom values for Prometheus
+# Sized for K3s homelab
+
+server:
+  # Persistence
+  persistentVolume:
+    enabled: true
+    size: 2Gi
+    storageClass: local-path
+
+  # Resources
+  resources:
+    limits:
+      memory: 512Mi
+      cpu: 500m
+    requests:
+      memory: 256Mi
+      cpu: 100m
+
+  # Retention
+  retention: "7d"
+
+  # Replica count
+  replicaCount: 1
+
+# Disable components not needed for learning
+alertmanager:
+  enabled: false
+
+prometheus-pushgateway:
+  enabled: false
+
+# Enable useful components
+kube-state-metrics:
+  enabled: true
+
+prometheus-node-exporter:
+  enabled: true

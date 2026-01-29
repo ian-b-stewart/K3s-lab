@@ -1,0 +1,35 @@
+# A parallel Job with multiple completions
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-job
+spec:
+  # Run 5 times total
+  completions: 5
+
+  # Run 2 pods at a time
+  parallelism: 2
+
+  backoffLimit: 3
+
+  template:
+    spec:
+      containers:
+        - name: worker
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Processing batch item..."
+              echo "Pod: $HOSTNAME"
+              sleep 5
+              echo "Done!"
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "50m"
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+      restartPolicy: Never

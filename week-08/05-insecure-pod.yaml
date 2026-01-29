@@ -1,0 +1,19 @@
+# Insecure pod for comparison (don't use in production!)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: insecure-pod
+spec:
+  containers:
+    - name: app
+      image: nginx:1.25
+      # No security context = runs as root
+      # Writable filesystem
+      # Full capabilities
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "128Mi"
+          cpu: "100m"

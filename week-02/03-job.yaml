@@ -1,0 +1,38 @@
+# A Job runs a task to completion
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-calculator
+spec:
+  # Number of successful completions required
+  completions: 1
+
+  # How many pods can run in parallel
+  parallelism: 1
+
+  # How many times to retry on failure
+  backoffLimit: 3
+
+  # Delete job after this many seconds (optional)
+  ttlSecondsAfterFinished: 300
+
+  template:
+    spec:
+      containers:
+        - name: pi
+          image: perl:5.38
+          command:
+            - perl
+            - -Mbignum=bpi
+            - -wle
+            - print bpi(2000)
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+
+      # Jobs should not restart on success
+      restartPolicy: Never

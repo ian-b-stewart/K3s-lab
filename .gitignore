@@ -1,0 +1,27 @@
+# Kubernetes
+kubeconfig
+*.kubeconfig
+.kube/
+
+# Secrets (should never be committed)
+*.secret
+*.key
+*.pem
+*.crt
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+tmp/
+temp/
+*.tmp
+*.log

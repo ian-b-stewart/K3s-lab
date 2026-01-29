@@ -1,0 +1,28 @@
+# LimitRange sets default and max resources per container
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-limits
+spec:
+  limits:
+    - type: Container
+
+      # Default limits (if not specified)
+      default:
+        memory: "128Mi"
+        cpu: "200m"
+
+      # Default requests (if not specified)
+      defaultRequest:
+        memory: "64Mi"
+        cpu: "50m"
+
+      # Maximum allowed
+      max:
+        memory: "512Mi"
+        cpu: "500m"
+
+      # Minimum required
+      min:
+        memory: "32Mi"
+        cpu: "25m"

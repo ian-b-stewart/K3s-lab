@@ -1,0 +1,15 @@
+# Pod Disruption Budget ensures minimum availability
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pdb-app-pdb
+spec:
+  # At least 3 pods must always be available
+  minAvailable: 3
+
+  # Alternative: allow at most 1 pod to be unavailable
+  # maxUnavailable: 1
+
+  selector:
+    matchLabels:
+      app: pdb-app
